@@ -6,5 +6,7 @@ class Object:
         self.xrot = xrot
         self.yrot = yrot
         self.zrot = zrot
+    def display(self, camera):
+        pass
 
-import D3.objects.mesh
+import D3.objects.mesh, D3.objects.camera

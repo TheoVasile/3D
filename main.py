@@ -5,14 +5,15 @@ import D3
 pg.init()
 
 #initialize screen variables
-w = 500
-h = 500
-screen = pg.display.set_mode((w, h))
+w = D3.WIDTH
+h = D3.HEIGHT
+screen = D3.SCREEN
 pg.display.set_caption("3D")
 clock = pg.time.Clock()
 fps = 60
 
-object = D3.add.Cube(0,0,0,0,0,0)
+object = D3.add.Cube(0, 0, 0, 0, 0, 0)
+camera = D3.add.Camera(0, 0, 0, 0, 0, 0, w, h)
 
 #start loop
 running = True
@@ -25,7 +26,7 @@ while running:
     #set background color
     screen.fill((0, 0, 0))
 
-    object.display()
+    object.display(camera)
 
     #update screen
     pg.display.update()
