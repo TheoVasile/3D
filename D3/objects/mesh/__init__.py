@@ -1,4 +1,6 @@
 import D3
+import math
+import numpy as np
 
 #a singular point on a mesh
 class Vertice:
@@ -9,17 +11,26 @@ class Vertice:
         self.screenPos = [int(x + D3.WIDTH/2), int(z + D3.HEIGHT/2)]
 
     #project point onto screen
-    def calculateScreenPos(self, projection):
+    def calculateScreenPos(self, camera):
+        project = (camera.width / camera.height) * (1 / math.tan(math.radians(camera.fov / 2)))
+
         #project including perspective
-        if projection == "persp":
-            pass
+        if camera.projection == "persp":
+            a = np.array([[1, 0, 0], [0, math.cos(math.radians(camera.xrot)), math.sin(math.radians(camera.xrot))], [0, -math.sin(math.radians(camera.xrot)), math.cos(math.radians(camera.xrot))]])
+            b = np.array([[math.cos(math.radians(camera.yrot)), 0, -math.sin(math.radians(camera.yrot))], [0, 1, 0], [math.sin(math.radians(camera.yrot)), 0, math.cos(math.radians(camera.yrot))]])
+            c = np.array([[math.cos(math.radians(camera.zrot)), math.sin(math.radians(camera.zrot)), 0], [-math.sin(math.radians(camera.zrot)), math.cos(math.radians(camera.zrot)), 0], [0, 0, 1]])
+            d = np.array([self.x - camera.x, self.y - camera.y, self.z - camera.z])
+
+            pos = a.dot(b).dot(c).dot(d)
+            self.screenPos[0] = ()
+
         #project without perspective
-        if projection == "ortho":
-            self.screenPos[0] = int(self.x + D3.WIDTH/2)
-            self.screenPos[1] = int(self.z + D3.HEIGHT/2)
+        if camera.projection == "ortho":
+            self.screenPos[0] = int(project * self.x + D3.WIDTH / 2)
+            self.screenPos[1] = int(project * self.y + D3.HEIGHT / 2)
 
     def display(self, camera):
-        self.calculateScreenPos(camera.projection)
+        self.calculateScreenPos(camera)
         D3.pg.draw.circle(D3.SCREEN, (255, 255, 255), self.screenPos, 2, 0)
 
     def get_pos(self):

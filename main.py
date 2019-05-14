@@ -13,7 +13,7 @@ clock = pg.time.Clock()
 fps = 60
 
 object = D3.add.Cube(0, 0, 0, 0, 0, 0)
-camera = D3.add.Camera(0, 0, 0, 0, 0, 0, w, h)
+camera = D3.add.Camera(0, 100, 0, 0, 0, 0, w, h, 10, 0.1, 1000)
 
 #start loop
 running = True
