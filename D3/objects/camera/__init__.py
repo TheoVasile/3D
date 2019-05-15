@@ -11,6 +11,9 @@ class Camera(objects.Object):
         self.startDist = startDist
         self.endDist = endDist
         self.aspectRatio = self.width/self.height
+
+        D3.calculate.plane([1, 2, 3], [2, 3, 2], [4, 5, 1])
+
     def project(self, objects):
         for object in objects:
             object.display(self)

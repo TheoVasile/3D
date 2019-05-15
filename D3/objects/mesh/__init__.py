@@ -22,6 +22,9 @@ class Vertice:
             d = np.array([self.x - camera.x, self.y - camera.y, self.z - camera.z])
 
             pos = a.dot(b).dot(c).dot(d)
+
+            plane =
+
             self.screenPos[0] = ()
 
         #project without perspective

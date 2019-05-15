@@ -1,4 +1,5 @@
 import math
+import sympy as sp
 
 class Equation:
     def __init__(self, x, y, z):
@@ -43,26 +44,28 @@ class Plane(Equation):
         self.d = d
 
 class Calculate:
+    def __init__(self):
+        pass
     def dist(self, point1, point2):
         math.sqrt((point1[0] - point2[0])**2 + (point1[1] - point2[1])**2 + (point1[2] - point2[2])**2)
     def line(self, point1, point2):
-        t = self.dist(point1, point2)
+        line = sp.Line3D(point1, point2)
 
-        a = (point2[0] - point1[0]) / t
-        b = (point2[1] - point1[1]) / t
-        c = (point2[2] - point1[2]) / t
+        return line
+    def plane(self, point1, point2, point3):
+        plane = sp.Plane(point1, point2, point3)
 
-        return point1, (a, b, c)
+        return plane
+
+
     def POI(self, ob1, ob2, ob3 = None):
         #point of intersection between line and plane
-        if (type(ob1) or type(ob2)) == 'Line' and (type(ob1) or type(ob2)) == 'Plane':
-            plane = [ob1, ob2][[type(ob1), type(ob2)].index('Plane')]
-            line  = [ob1, ob2][[type(ob1), type(ob2)].index('Line')]
+        if (type(ob1) or type(ob2)) == 'Line' and (type(ob1) or type(ob2)) == 'Plane3D':
+            plane = [ob1, ob2][[type(ob1), type(ob2)].index('Plane3D')]
+            line  = [ob1, ob2][[type(ob1), type(ob2)].index('Line3D')]
 
-            t = plane.get_normal()[0] * line.get_direction()[0] + plane.get_normal()[1] * line.get_direction()[1] + plane.get_normal()[2] * line.get_direction()[2]
-            t = plane.get_displace() / t
+            pass
 
-            point = line.calculate(t)
         elif (type(ob1) and type(ob2) and type(ob3)) == 'Plane':
             pass
         elif (type(ob1) and type(ob2)) == 'Line':
